@@ -115,6 +115,8 @@ class AbstractSimulationSequenceGenerator(ABC):
         :param window_size: length of input time series slice in samples
         :param shift: spacing between starts of following slices, if None given no overlapping samples are generated
         :param use_overlap_in_test: if False no overlapping samples are allowed in test sequences
+        :param mask_test_outputs: if True sequences are masked during model test
+        :param n_unmasked_test_samples: number of test samples to compute metrics for
         """
         self.window_size = window_size
         self._shift = shift
