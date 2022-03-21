@@ -23,6 +23,7 @@ class TorchPredictiveSequenceLoader(NumpyPredictiveSequenceGenerator, TorchDataL
         use_overlap_in_test: bool = False,
         batch_size: int = 32,
         dtype: torch.dtype = torch.float32,
+        device: str = "cpu",
     ):
         """
         :param states: array containing time series of system states
@@ -33,6 +34,7 @@ class TorchPredictiveSequenceLoader(NumpyPredictiveSequenceGenerator, TorchDataL
         :param use_overlap_in_test: if False no overlap in test is allowed
         :param batch_size: batch size to use in samples
         :param dtype: torch numeric data type
+        :param device: torch device to use
         """
         super().__init__(
             states,
@@ -45,6 +47,7 @@ class TorchPredictiveSequenceLoader(NumpyPredictiveSequenceGenerator, TorchDataL
 
         self.batch_size = batch_size
         self.dtype = dtype
+        self.device = device
 
 
 class TorchPredictiveSequenceFrameLoader(PandasPredictiveSequenceGenerator, TorchDataLoaderMixin):
@@ -62,6 +65,7 @@ class TorchPredictiveSequenceFrameLoader(PandasPredictiveSequenceGenerator, Torc
         use_overlap_in_test: bool = False,
         batch_size: int = 32,
         dtype: torch.dtype = torch.float32,
+        device: str = "cpu",
     ):
         """
         :param data: data frame containing time series of system states
@@ -72,6 +76,7 @@ class TorchPredictiveSequenceFrameLoader(PandasPredictiveSequenceGenerator, Torc
         :param use_overlap_in_test: if False no overlap in test is allowed
         :param batch_size: batch size to use in samples
         :param dtype: torch numeric data type
+        :param device: torch device to use
         """
         super().__init__(
             data,
@@ -86,6 +91,7 @@ class TorchPredictiveSequenceFrameLoader(PandasPredictiveSequenceGenerator, Torc
 
         self.batch_size = batch_size
         self.dtype = dtype
+        self.device = device
 
 
 class TorchSimulationSequenceLoader(NumpySimulationSequenceGenerator, TorchDataLoaderMixin):
@@ -103,6 +109,7 @@ class TorchSimulationSequenceLoader(NumpySimulationSequenceGenerator, TorchDataL
         n_unmasked_test_samples: int = 0,
         batch_size: int = 32,
         dtype: torch.dtype = torch.float32,
+        device: str = "cpu",
     ):
         """
         :param inputs: array of model inputs
@@ -115,6 +122,7 @@ class TorchSimulationSequenceLoader(NumpySimulationSequenceGenerator, TorchDataL
         :param n_unmasked_test_samples: number of test samples to compute metrics for
         :param batch_size: batch size to use in samples
         :param dtype: torch numeric data type
+        :param device: torch device to use
         """
         super().__init__(
             inputs,
@@ -129,6 +137,7 @@ class TorchSimulationSequenceLoader(NumpySimulationSequenceGenerator, TorchDataL
 
         self.batch_size = batch_size
         self.dtype = dtype
+        self.device = device
 
 
 class TorchSimulationSequenceFrameLoader(PandasSimulationSequenceGenerator, TorchDataLoaderMixin):
@@ -147,6 +156,7 @@ class TorchSimulationSequenceFrameLoader(PandasSimulationSequenceGenerator, Torc
         n_unmasked_test_samples: int = 0,
         batch_size: int = 32,
         dtype: torch.dtype = torch.float32,
+        device: str = "cpu",
     ):
         """
         :param data: DataFrame with named columns containing inputs and outputs
@@ -160,6 +170,7 @@ class TorchSimulationSequenceFrameLoader(PandasSimulationSequenceGenerator, Torc
         :param n_unmasked_test_samples: number of test samples to compute metrics for
         :param batch_size: batch size to use in samples
         :param dtype: torch numeric data type
+        :param device: torch device to use
         """
         super().__init__(
             data,
@@ -175,6 +186,7 @@ class TorchSimulationSequenceFrameLoader(PandasSimulationSequenceGenerator, Torc
 
         self.batch_size = batch_size
         self.dtype = dtype
+        self.device = device
 
 
 class NumpyChunkPredictiveSequenceGenerator(NumpyPredictiveSequenceGenerator, ChunkMixin):
