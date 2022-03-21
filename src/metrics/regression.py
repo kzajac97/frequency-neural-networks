@@ -105,7 +105,7 @@ def normalized_root_mean_square_error(y_true: Sequence, y_pred: Sequence) -> np.
     y_true, y_pred = utils.cast_to_arrays(y_true, y_pred)
     utils.verify_shape(y_true, y_pred)
 
-    return np.mean(np.sqrt(np.power((y_true - y_pred), 2))) / np.std(y_true)
+    return np.sqrt(np.mean(np.power((y_true - y_pred), 2))) / np.std(y_true)
 
 
 def normalized_mean_absolute_error(y_true: Sequence, y_pred: Sequence) -> np.array:
