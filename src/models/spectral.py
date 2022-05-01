@@ -36,7 +36,9 @@ class SpectralTimeSeriesConv(nn.Module):
         self.output_fourier_modes = n_output_time_steps // 2 + 1
         # random matrix of complex weights
         # TODO: Initializers as a parameter
-        weights = torch.rand(self.input_fourier_modes, self.output_fourier_modes, self.n_output_state_variables, dtype=torch.cfloat)
+        weights = torch.rand(
+            self.input_fourier_modes, self.output_fourier_modes, self.n_output_state_variables, dtype=torch.cfloat
+        )
         self.weights = nn.Parameter(weights)
 
     def complex_batch_multiply(self, inputs: torch.Tensor) -> torch.Tensor:

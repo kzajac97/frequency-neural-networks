@@ -24,4 +24,4 @@ class MaskWarmupWrapper(nn.Module):
         if self.training:
             return self.model(inputs)
 
-        return self.model(inputs)[:, -self.n_unmasked_samples:, :]
+        return self.model(inputs)[:, -self.n_unmasked_samples :, :]

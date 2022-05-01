@@ -19,7 +19,7 @@ class PandasPredictiveSequenceGenerator(AbstractPredictiveSequenceGenerator):
         target_column_names: Optional[Tuple[str]] = None,
         test_size: Union[int, float] = 0.5,
         shift: Optional[int] = None,
-        use_overlap_in_test: bool = False
+        use_overlap_in_test: bool = False,
     ):
         """
         :param data: data frame containing time series of system states
@@ -68,16 +68,17 @@ class PandasPredictiveSequenceGenerator(AbstractPredictiveSequenceGenerator):
     @cached_property
     def train(self) -> Tuple[np.array, np.array]:
         """Cached train data split into sequences"""
-        return self.split(self.data[:self.first_test_index], test=False)
+        return self.split(self.data[: self.first_test_index], test=False)
 
     @cached_property
     def test(self) -> Tuple[np.array, np.array]:
         """Cached test data split into sequences"""
-        return self.split(self.data[self.first_test_index:], test=True)
+        return self.split(self.data[self.first_test_index :], test=True)
 
 
 class PandasSimulationSequenceGenerator(AbstractSimulationSequenceGenerator):
     """Class holds implementation of Sequence generator for dynamical system simulation problems"""
+
     def __init__(
         self,
         data: pd.DataFrame,
@@ -88,7 +89,7 @@ class PandasSimulationSequenceGenerator(AbstractSimulationSequenceGenerator):
         shift: Optional[int] = None,
         use_overlap_in_test: bool = False,
         mask_test_outputs: bool = False,
-        n_unmasked_test_samples: int = 0
+        n_unmasked_test_samples: int = 0,
     ):
         """
         :param data: DataFrame with named columns containing inputs and outputs
@@ -147,9 +148,9 @@ class PandasSimulationSequenceGenerator(AbstractSimulationSequenceGenerator):
     @cached_property
     def train(self) -> Tuple[np.array, np.array]:
         """Cached train data split into sequences"""
-        return self.split(self.data.iloc[:self.first_test_index].values, test=False)
+        return self.split(self.data.iloc[: self.first_test_index].values, test=False)
 
     @cached_property
     def test(self) -> Tuple[np.array, np.array]:
         """Cached test data split into sequences"""
-        return self.split(self.data.iloc[self.first_test_index:].values, test=True)
+        return self.split(self.data.iloc[self.first_test_index :].values, test=True)
