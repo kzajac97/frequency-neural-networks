@@ -9,17 +9,16 @@ from torch.utils.data import DataLoader, TensorDataset
 
 class TorchDataLoaderMixin(ABC):
     """Mixin adding torch Data Loaders to SequenceGenerators"""
-    def __init__(
-        self,
-        batch_size: int,
-        dtype: torch.dtype = torch.float32,
-    ):
+
+    def __init__(self, batch_size: int, dtype: torch.dtype = torch.float32, device: str = "cpu"):
         """
         :param batch_size: batch size to use in samples
         :param dtype: torch numeric data type
+        :param device: torch device to run training on
         """
         self.batch_size = batch_size
         self.dtype = dtype
+        self.device = device
 
     @cached_property
     @abstractmethod
@@ -35,8 +34,8 @@ class TorchDataLoaderMixin(ABC):
 
     def _prepare_dataset(self, features: np.array, targets: np.array) -> TensorDataset:
         """Creates tensor dataset with consistent data types"""
-        features = torch.from_numpy(features).to(self.dtype)
-        targets = torch.from_numpy(targets).to(self.dtype)
+        features = torch.from_numpy(features).to(self.dtype).to(self.device)
+        targets = torch.from_numpy(targets).to(self.dtype).to(self.device)
 
         return TensorDataset(features, targets)
 
@@ -59,6 +58,7 @@ class TorchDataLoaderMixin(ABC):
 
 class ChunkMixin(ABC):
     """Mixing adding functionality to split time series dataset using any ratio"""
+
     def __init__(self, use_test_split: bool = True):
         """
         :param use_test_split: if True use testing setting in split

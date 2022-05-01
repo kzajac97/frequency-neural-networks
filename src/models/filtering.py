@@ -20,7 +20,7 @@ class NeuralFilter(nn.Module):
         n_output_time_steps: int,
         n_input_state_variables: int,
         n_output_state_variables: int,
-        fourier_modes: Optional[int] = None
+        fourier_modes: Optional[int] = None,
     ):
         """
         :param n_input_time_steps: number of time steps in input
@@ -57,7 +57,7 @@ class NeuralFilter(nn.Module):
 
     def forward(self, inputs: torch.Tensor) -> torch.Tensor:
         variables = self._forward_transform(inputs)
-        variables = variables[:, :self.fourier_modes, :]  # truncate to relevant modes
+        variables = variables[:, : self.fourier_modes, :]  # truncate to relevant modes
         outputs = self.complex_multiply_to_output(variables)  # filter
         # TODO: Activation can be applied here
 

@@ -8,6 +8,7 @@ from .abstract import AbstractPredictiveSequenceGenerator, AbstractSimulationSeq
 
 class NumpyPredictiveSequenceGenerator(AbstractPredictiveSequenceGenerator):
     """Class holds implementation of Sequence generator for dynamical system simulation problems"""
+
     def __init__(
         self,
         states: np.array,
@@ -15,7 +16,7 @@ class NumpyPredictiveSequenceGenerator(AbstractPredictiveSequenceGenerator):
         output_window_size: int,
         test_size: Union[int, float] = 0.5,
         shift: Optional[int] = None,
-        use_overlap_in_test: bool = False
+        use_overlap_in_test: bool = False,
     ):
         """
         :param states: array containing time series of system states
@@ -54,16 +55,17 @@ class NumpyPredictiveSequenceGenerator(AbstractPredictiveSequenceGenerator):
     @cached_property
     def train(self) -> Tuple[np.array, np.array]:
         """Cached train data split into sequences"""
-        return self.split(self.data[:self.first_test_index], test=False)
+        return self.split(self.data[: self.first_test_index], test=False)
 
     @cached_property
     def test(self) -> Tuple[np.array, np.array]:
         """Cached test data split into sequences"""
-        return self.split(self.data[self.first_test_index:], test=True)
+        return self.split(self.data[self.first_test_index :], test=True)
 
 
 class NumpySimulationSequenceGenerator(AbstractSimulationSequenceGenerator):
     """Class holds implementation of Sequence generator for dynamical system simulation problems"""
+
     def __init__(
         self,
         inputs: np.array,
@@ -122,9 +124,9 @@ class NumpySimulationSequenceGenerator(AbstractSimulationSequenceGenerator):
     @cached_property
     def train(self) -> Tuple[np.array, np.array]:
         """Cached train data split into sequences"""
-        return self.split(self.data[:self.first_test_index], test=False)
+        return self.split(self.data[: self.first_test_index], test=False)
 
     @cached_property
     def test(self) -> Tuple[np.array, np.array]:
         """Cached test data split into sequences"""
-        return self.split(self.data[self.first_test_index:], test=True)
+        return self.split(self.data[self.first_test_index :], test=True)

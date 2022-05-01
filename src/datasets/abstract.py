@@ -79,7 +79,7 @@ class AbstractPredictiveSequenceGenerator(ABC):
         if values.ndim == 1:
             values = np.expand_dims(values, axis=1)
 
-        for index in list(range(len(values)))[:: shift]:
+        for index in list(range(len(values)))[::shift]:
             if index + self.input_window_size + self.output_window_size >= len(values):
                 break  # break when window size longer than input
             features.append(values[index : index + self.input_window_size, self.feature_columns])
@@ -109,7 +109,7 @@ class AbstractSimulationSequenceGenerator(ABC):
         test_size: Union[int, float] = 0.5,
         use_overlap_in_test: bool = False,
         mask_test_outputs: bool = False,
-        n_unmasked_test_samples: int = 0
+        n_unmasked_test_samples: int = 0,
     ):
         """
         :param window_size: length of input time series slice in samples
@@ -172,16 +172,16 @@ class AbstractSimulationSequenceGenerator(ABC):
         if values.ndim == 1:
             values = np.expand_dims(values, axis=1)
 
-        for index in list(range(len(values)))[:: shift]:
+        for index in list(range(len(values)))[::shift]:
             if index + self.window_size > len(values):
                 break  # break when window size longer than input
-            features.append(values[index: index + self.window_size, self.feature_columns])
+            features.append(values[index : index + self.window_size, self.feature_columns])
 
             if test and self.mask_test_outputs:
                 # mask target samples leaving only `n_unmasked_test_samples`
                 n_masked_samples = self.window_size - self.n_unmasked_test_samples
-                targets.append(values[index + n_masked_samples: index + self.window_size, self.target_columns])
+                targets.append(values[index + n_masked_samples : index + self.window_size, self.target_columns])
             else:
-                targets.append(values[index: index + self.window_size, self.target_columns])
+                targets.append(values[index : index + self.window_size, self.target_columns])
 
         return np.asarray(features), np.asarray(targets)

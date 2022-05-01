@@ -52,8 +52,14 @@ def plot_predictive_window(
         if predictions is not None:
             if scatter:
                 plt.scatter(
-                    t, predictions[:, n], marker="X", edgecolors="k",
-                    label="Predictions", c="#ff7f0e", s=marker_size, **plot_kws
+                    t,
+                    predictions[:, n],
+                    marker="X",
+                    edgecolors="k",
+                    label="Predictions",
+                    c="#ff7f0e",
+                    s=marker_size,
+                    **plot_kws
                 )
             else:
                 plt.plot(t, predictions[:, n], label="Predictions", c="#ff7f0e", **plot_kws)
@@ -100,9 +106,9 @@ def plot_simulation_window(
             kws = {}
 
         if scatter:
-            plt.scatter(t[-len(array):], array[:, dim], edgecolors="k", label=label, c=c, s=marker_size, **kws)
+            plt.scatter(t[-len(array) :], array[:, dim], edgecolors="k", label=label, c=c, s=marker_size, **kws)
         else:
-            plt.plot(t[-len(array):], array[:, dim], label=label, c=c, **kws)
+            plt.plot(t[-len(array) :], array[:, dim], label=label, c=c, **kws)
 
     for n in range(n_dim):
         plt.subplot(n_dim, 1, n + 1)

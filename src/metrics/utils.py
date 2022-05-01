@@ -32,4 +32,3 @@ def verify_shape(y_true: np.array, y_pred: np.array) -> None:
     """Verifies if arrays have correct shape for metric computation"""
     if y_true.shape != y_pred.shape:
         raise TypeError(f"Array shapes are different must match! {y_true.shape} != {y_pred.shape}")
-
