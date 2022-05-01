@@ -43,7 +43,7 @@ class TorchSweepRunner:
                 ],
             )
             score = evaluate(model, self.generator)
-            wandb.log(score)
+            wandb.log(score.to_dict())
 
     def run_sweep(self, config: Dict[str, Any], n_runs: int, project_name: str) -> None:
         """
